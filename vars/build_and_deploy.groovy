@@ -7,6 +7,7 @@ def call(Map pipelineParams) {
         env.BRANCH = pipelineParams.BRANCH
         env.APP_NAME = pipelineParams.APP_NAME
         env.MVN_HOME = pipelineParams.MVN_HOME
+        env.TOMCAT_PATH = pipelineParams.TOMCAT_PATH
         node {
           stage("Code Checkout") {
             sh '''
@@ -35,7 +36,7 @@ def call(Map pipelineParams) {
           stage("Deploy") {
             sh '''
               echo "Deployment"
-              cp ${WORKSPACE}/${APP_NAME}/target/*.war /opt/apache-tomcat-8.5.69/webapps/
+              cp ${WORKSPACE}/${APP_NAME}/target/*.war ${TOMCAT_PATH}/webapps/
             '''
           }
         }
